@@ -1,9 +1,9 @@
 import { CreateEvent } from "./CreateEvent";
-import { useEvents, useUpdates } from "../context/hooks";
+import { useEvents, useActions } from "../context/hooks";
 
 export const Events = () => {
   const events = useEvents();
-  const { cancelEvent } = useUpdates();
+  const { cancelEvent } = useActions();
 
   return (
     <div className="m-2 p-2 text-sm">

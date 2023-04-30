@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { Contact } from "../types";
-import { useUpdates } from "../context/hooks";
+import { useActions } from "../context/hooks";
 
 export const AddContact = () => {
-  const { addContact } = useUpdates();
+  const { addContact } = useActions();
 
   const formRef = useRef<HTMLFormElement>(null);
 
