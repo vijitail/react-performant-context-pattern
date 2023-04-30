@@ -1,45 +1,31 @@
-import { createContext, useState } from "react";
-import { Contact, Event, AppContext as IAppContext } from "../types";
+import { createContext, useReducer } from "react";
+import { AppContext as IAppContext } from "../types";
 
 import contactsData from "../data/contacts.json";
 import eventsData from "../data/events.json";
+import { contactActions, eventActions } from "../actions";
+import { contactsReducer, eventsReducer } from "../reducer";
+import { bindActionCreators } from "../utils";
 
-export const AppContext = createContext<IAppContext | Record<string, never>>(
-  {}
-);
+export const AppContext = createContext<
+  IAppContext | Record<string, (...args: unknown[]) => void>
+>({});
 
 interface AppProviderProps {
   children: React.ReactNode;
 }
 
 export const AppProvider = ({ children }: AppProviderProps) => {
-  const [contacts, setContacts] = useState<Contact[]>(contactsData);
-  const [events, setEvents] = useState<Event[]>(eventsData);
+  const [contacts, contactDispatch] = useReducer(contactsReducer, contactsData);
+  const [events, eventDispatch] = useReducer(eventsReducer, eventsData);
 
-  const deleteContact = (id: number) => {
-    const idx = contacts.findIndex((c) => c.id === id);
-    const updatedContacts = [
-      ...contacts.slice(0, idx),
-      ...contacts.slice(idx + 1),
-    ];
-    setContacts(updatedContacts);
-  };
-
-  const cancelEvent = (id: number) => {
-    const idx = events.findIndex((c) => c.id === id);
-    const updatedEvents = [...events.slice(0, idx), ...events.slice(idx + 1)];
-    setEvents(updatedEvents);
-  };
-
-  const addContact = (contact: Contact) => {
-    contact.id = contacts.length + 1;
-    setContacts([...contacts, contact]);
-  };
-
-  const createEvent = (event: Event) => {
-    event.id = events.length + 1;
-    setEvents([...events, event]);
-  };
+  const actions = {
+    ...bindActionCreators(contactActions, contactDispatch),
+    ...bindActionCreators(eventActions, eventDispatch),
+  } as Pick<
+    IAppContext,
+    "addContact" | "deleteContact" | "cancelEvent" | "createEvent"
+  >;
 
   events.sort(
     (a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
@@ -50,10 +36,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       value={{
         contacts,
         events,
-        cancelEvent,
-        deleteContact,
-        createEvent,
-        addContact,
+        ...actions,
       }}
     >
       {children}
