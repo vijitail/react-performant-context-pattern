@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "eventTitle": "Meeting with John Doe",
+    "contactName": "John Doe",
+    "eventDate": "2023-05-01",
+    "eventTime": "10:00 AM"
+  },
+  {
+    "id": 2,
+    "eventTitle": "Phone call with Jane Smith",
+    "contactName": "Jane Smith",
+    "eventDate": "2023-05-03",
+    "eventTime": "2:00 PM"
+  },
+  {
+    "id": 3,
+    "eventTitle": "Lunch with Bob Johnson",
+    "contactName": "Bob Johnson",
+    "eventDate": "2023-05-05",
+    "eventTime": "12:30 PM"
+  }
+]
