@@ -1,9 +1,9 @@
 import { AddContact } from "./AddContact";
-import { useContacts, useUpdates } from "../context/hooks";
+import { useContacts, useActions } from "../context/hooks";
 
 export const Contacts = () => {
   const contacts = useContacts();
-  const { deleteContact } = useUpdates();
+  const { deleteContact } = useActions();
 
   return (
     <div className="m-2 p-2 text-sm">
