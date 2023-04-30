@@ -1,6 +1,6 @@
-import { createContext, useReducer } from "react";
+import { useMemo, useReducer } from "react";
 import { AppContext as IAppContext } from "../types";
-
+import { createContext } from "use-context-selector";
 import contactsData from "../data/contacts.json";
 import eventsData from "../data/events.json";
 import { contactActions, eventActions } from "../actions";
@@ -19,10 +19,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [contacts, contactDispatch] = useReducer(contactsReducer, contactsData);
   const [events, eventDispatch] = useReducer(eventsReducer, eventsData);
 
-  const actions = {
-    ...bindActionCreators(contactActions, contactDispatch),
-    ...bindActionCreators(eventActions, eventDispatch),
-  } as Pick<
+  const actions = useMemo(
+    () => ({
+      ...bindActionCreators(contactActions, contactDispatch),
+      ...bindActionCreators(eventActions, eventDispatch),
+    }),
+    []
+  ) as Pick<
     IAppContext,
     "addContact" | "deleteContact" | "cancelEvent" | "createEvent"
   >;

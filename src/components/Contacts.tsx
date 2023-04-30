@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { AppContext } from "../context/app";
 import { AddContact } from "./AddContact";
+import { useActions, useContacts } from "../context/hooks";
 
 export const Contacts = () => {
-  const { contacts, deleteContact } = useContext(AppContext);
+  const contacts = useContacts();
+  const { deleteContact } = useActions();
 
   return (
     <div className="m-2 p-2 text-sm">
