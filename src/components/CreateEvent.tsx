@@ -1,9 +1,10 @@
-import { useContext, useRef, useState } from "react";
-import { AppContext } from "../context/app";
+import { useRef, useState } from "react";
 import { Event } from "../types";
+import { useContacts, useUpdates } from "../context/hooks";
 
 export const CreateEvent = () => {
-  const { createEvent, contacts } = useContext(AppContext);
+  const contacts = useContacts();
+  const { createEvent } = useUpdates();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 

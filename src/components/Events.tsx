@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { AppContext } from "../context/app";
 import { CreateEvent } from "./CreateEvent";
+import { useEvents, useUpdates } from "../context/hooks";
 
 export const Events = () => {
-  const { events, cancelEvent } = useContext(AppContext);
+  const events = useEvents();
+  const { cancelEvent } = useUpdates();
 
   return (
     <div className="m-2 p-2 text-sm">
